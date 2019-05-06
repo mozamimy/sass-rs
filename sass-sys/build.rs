@@ -69,8 +69,8 @@ fn compile() {
         || target.contains("netbsd")
         || target.contains("openbsd");
 
-    let jobs = num_cpus::get().to_string();
-    println!("DEBUG[sass-sys]: jobs = {}", jobs);
+    let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or_else(|_| num_cpus::get().to_string());
+    println!("DEBUG: jobs = {}", jobs);
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
         .current_dir(&build)
         .args(&["--jobs", &jobs])
