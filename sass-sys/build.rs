@@ -69,9 +69,11 @@ fn compile() {
         || target.contains("netbsd")
         || target.contains("openbsd");
 
+    let jobs = num_cpus::get().to_string();
+    println!("DEBUG[sass-sys]: jobs = {}", jobs);
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
         .current_dir(&build)
-        .args(&["--jobs", &num_cpus::get().to_string()])
+        .args(&["--jobs", &jobs])
         .output()
         .expect("error running make");
 
