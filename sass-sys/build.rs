@@ -69,7 +69,7 @@ fn compile() {
         || target.contains("netbsd")
         || target.contains("openbsd");
 
-    let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or_else(|_| num_cpus::get().to_string());
+    let jobs = env::var("MAKE_LIBSASS_JOBS").unwrap_or(num_cpus::get().to_string());
     println!("DEBUG: jobs = {}", jobs);
     let r = Command::new(if is_bsd { "gmake" } else { "make" })
         .current_dir(&build)
